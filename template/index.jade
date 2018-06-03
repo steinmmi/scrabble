@@ -2,9 +2,12 @@ doctype
 html
     head
         title= "Real time web chat"
+        link(href='style.css', rel='stylesheet')
         script(src='socket.io/socket.io.js')
         script(src='scrabble.js')
+        script(src='raphael.min.js')
     body
         h1 Scrabble en ligne
-        button#button Envoyer
-
+        div#game
+        div#letters
+        input#endturn(type="button", value="Fin du tour")
