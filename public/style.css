@@ -22,8 +22,20 @@ body {
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     border-radius: 5px;
 
+    animation: appear 1s ease-out;
 
 }
+
+@keyframes appear {
+    0% {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
 .carte img {
     width: 60px;
     height: 60px;
@@ -41,6 +53,18 @@ body {
 .carte.selected:hover {
     box-shadow: 0 8px 6px rgba(81, 203, 238, 1), 0 8px 6px rgba(81, 203, 238, 1);
 }
+
+.carte.used {
+    filter: grayscale(100%);
+    transition: none;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+.carte.used:hover {
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    transform: none;
+}
+
+
 input [type="radio"] {
     width: 50px;
     height: 50px;

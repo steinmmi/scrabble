@@ -1,7 +1,7 @@
 # Scrabble
 Un scrabble
 
-##Installation
+## Installation
 ```
 npm install
 npm run start
