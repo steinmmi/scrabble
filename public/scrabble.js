@@ -3,11 +3,11 @@ window.onload = function() {
 
     game = document.querySelector("#game")
     let letterActual = ''
-    const BOXSIZE = 40
+    const BOXSIZE = 60
     const BOARDSIZE = 15
     const paper = new Raphael(game, BOXSIZE*BOARDSIZE, BOXSIZE*BOARDSIZE);
     let tab = []
-    let usedLetters = []
+    let imgLetters = []
     const tabC = [[1,0,0,4,0,0,0,1,0,0,0,4,0,0,1],
         [0,2,0,0,0,3,0,0,0,3,0,0,0,2,0],
         [0,0,2,0,0,0,4,0,4,0,0,0,2,0,0],
@@ -26,10 +26,9 @@ window.onload = function() {
 
 
 
-console.log(socket.sessionID)
     for(let y = 0; y < BOARDSIZE; y++ ) {
         tab[y] = []
-        usedLetters[y] = []
+        imgLetters[y] = []
         for (let x = 0; x < BOARDSIZE; x++) {
             let fillColor
             switch (tabC[y][x]) {
@@ -60,36 +59,34 @@ console.log(socket.sessionID)
                 .data(
                     "used", false
                 )
-                .click(function () {
-                    if (!letterActual) return null
-                    usedLetters.push({
-                        x: x,
-                        y: y,
-                        letter: letterActual,
-                        caseValue: tabC[y][x]
-                    })
+            imgLetters[y][x] = paper.image(``, x * BOXSIZE, y * BOXSIZE, BOXSIZE, BOXSIZE).attr({
+                fill: "black"
+            })
+            .click(function () {
+                if (!letterActual) return null
 
-
-                    socket.emit('clickBox', {
-                        x: x,
-                        y: y,
-                        letter: letterActual,
-                        caseValue: tabC[y][x]
-                    });
-                    document.querySelector('.selected').classList.add('used')
-                    document.querySelector('.selected').classList.remove('selected')
-                    letterActual = ''
+                tab[y][x].attr({
+                    fill:"#DDBB8F"
                 })
-            usedLetters[y][x] = paper.text(x * BOXSIZE + BOXSIZE / 2, y * BOXSIZE + BOXSIZE / 2, '').attr({
-                "font-size": BOXSIZE
+
+
+                socket.emit('clickBox', {
+                    x: x,
+                    y: y,
+                    letter: letterActual,
+                    caseValue: tabC[y][x]
+                });
+                document.querySelector('.selected').classList.add('used')
+                document.querySelector('.selected').classList.remove('selected')
+                letterActual = ''
             });
 
         }
     }
     socket.on('clickBox', function (data) {
-        console.log(usedLetters[data.y][data.x])
-        usedLetters[data.y][data.x].attr({
-            text: data.letter
+
+        imgLetters[data.y][data.x].attr({
+            src: `letters/${data.letter}.jpg`
         });
     })
     let element = document.querySelector('#letters')
@@ -100,13 +97,36 @@ console.log(socket.sessionID)
 
     socket.on('cancel', function (data) {
         data.forEach(function (doc) {
-            usedLetters[doc.y][doc.x].attr({text: ""})
+            imgLetters[doc.y][doc.x].attr({src: ""})
+            let fillColor =''
+            switch (tabC[doc.y][doc.x]) {
+                case 3:
+                    fillColor = "#0000FF"
+                    break
+                case 4:
+                    fillColor = "#00C0FF"
+                    break
+                case 9:
+                    fillColor = "gold"
+                    break
+                case 1:
+                    fillColor = "red"
+                    break
+                case 2:
+                    fillColor = "#FF80E5"
+                    break
+                default:
+                    fillColor = "#19BE72"
+                    break
+            }
+            tab[doc.y][doc.x].attr({
+                fill: fillColor
+            })
         })
+
     })
 
-    socket.on('newUser',function (data) {
-        console.log(data)
-    })
+
     function createLetter (letter) {
         let letterContainer = document.createElement('div')
         letterContainer.setAttribute('class','carte')
@@ -127,6 +147,7 @@ console.log(socket.sessionID)
         let usedCards = document.querySelectorAll('.used')
         for (i = 0; i < usedCards.length; i++) {
             usedCards[i].classList.remove('used');
+
         }
         socket.emit('cancel')
     })
