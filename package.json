@@ -1,0 +1,11 @@
+{
+  "name": "Scrabble",
+  "version": "0.0.1",
+  "description": "Un scrabble en ligne",
+  "dependencies": {
+    "socket.io": "latest",
+    "express": "latest",
+    "jade": "latest"
+  },
+  "author": "Mathieu S, Léo M"
+}
