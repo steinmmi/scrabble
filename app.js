@@ -11,6 +11,7 @@ app.get("/", function(req, res){
     res.render("index");
 });
 
+const lettersValue = {A : 1,B : 3,C : 3,D : 2,E : 1,F : 4,G : 2,H : 4,I : 1,J : 8,K : 5,L : 1,M : 3,N : 1,O : 1,P : 3,Q : 10,R : 1,S : 1,T : 1,U : 1,V : 4,W : 4,X : 8,Y : 4,Z : 10}
 const MAINHAND = 7
 let users = []
 
@@ -36,8 +37,31 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('endturn', function () {
-        for(d in tempLetters)
+        let totalBonus = 1
+        let bonus = 1
+        let totalPts = 0
+        for(lett of tempLetters) {
+            switch (lett.caseValue) {
+                case 4:
+                    bonus = 2
+                    break
+                case 3:
+                    bonus = 3
+                    break
+                case 1:
+                    totalBonus*=3
+                    break
+                case 2:
+                    totalBonus*=2
+                    break
+                case 9:
+                    totalBonus*=2
+                    break
+            }
+            totalPts += bonus*lettersValue[lett.letter]
             sendLetter(socket)
+        }
+        console.log("Le mot vaut : "+totalPts*totalBonus)
         tempLetters = []
     })
     socket.on('cancel', function () {

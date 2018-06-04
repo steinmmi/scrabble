@@ -64,12 +64,7 @@ window.onload = function() {
             })
             .click(function () {
                 if (!letterActual) return null
-
-                tab[y][x].attr({
-                    fill:"#DDBB8F"
-                })
-
-
+                if(imgLetters[y][x].attr('src') !== 'about:blank' && imgLetters[y][x].attr('src') !== '') return null
                 socket.emit('clickBox', {
                     x: x,
                     y: y,
@@ -84,7 +79,6 @@ window.onload = function() {
         }
     }
     socket.on('clickBox', function (data) {
-
         imgLetters[data.y][data.x].attr({
             src: `letters/${data.letter}.jpg`
         });
