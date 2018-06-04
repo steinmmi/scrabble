@@ -69,6 +69,10 @@ io.sockets.on('connection', function (socket) {
         let totalPts = 0
         let wordPts = 0
         indexLetter = tempLetters[0]
+        if(!data.x) {
+            nextTurn()
+            return null
+        }
         if(data.x.length < 2 && data.y.length < 2) {
           io.sockets.emit('cancel', tempLetters)
           socket.emit('validate', false)
@@ -150,10 +154,19 @@ io.sockets.on('connection', function (socket) {
           case '/start':
             if(!started)
               start()
+            else socket.emit('notification', {
+                message: "Une partie est déjà en cours ...",
+                type: "system"
+            })
             break;
           case '/score':
             if(started)
-              askScore()
+                askScore(socket)
+            else
+                socket.emit('notification', {
+                    message: "Aucune partie en cours",
+                    type: "system"
+                })
             break
           default:
             socket.emit('notification', {
@@ -205,8 +218,13 @@ function start() {
 }
 
 function askScore (socket) {
-  for(let playerId in players)
-    console.log(scores[playerId])
+    let message = 'Les scores sont :'
+    for(let playerId in players)
+    message += `<li>${users[players[playerId]]} : ${scores[playerId]}</li>`
+      socket.emit('notification',{
+          message: message,
+          type: 'system'
+      })
 }
 
 function nextTurn() {

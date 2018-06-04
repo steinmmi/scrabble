@@ -122,6 +122,7 @@ window.onload = function() {
       message.classList.add(data.type)
       message.innerHTML = data.message
       chatArea.appendChild(message)
+      chatArea.scrollTop = chatArea.scrollHeight;
     })
 
     socket.on('cancel', function (data) {
