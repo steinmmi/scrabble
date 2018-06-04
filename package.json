@@ -3,9 +3,10 @@
   "version": "0.0.1",
   "description": "Un scrabble en ligne",
   "dependencies": {
-    "socket.io": "latest",
     "express": "latest",
-    "jade": "latest"
+    "jade": "latest",
+    "nodemon": "^1.17.5",
+    "socket.io": "latest"
   },
   "scripts": {
     "start": "nodemon app.js"

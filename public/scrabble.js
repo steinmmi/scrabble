@@ -3,7 +3,7 @@ window.onload = function() {
 
     game = document.querySelector("#game")
     let letterActual = ''
-    const BOXSIZE = 60
+    const BOXSIZE = 40
     const BOARDSIZE = 15
     const paper = new Raphael(game, BOXSIZE*BOARDSIZE, BOXSIZE*BOARDSIZE);
     let tab = []
