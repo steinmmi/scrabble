@@ -22,11 +22,21 @@ body {
     cursor: pointer;
     box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     border-radius: 5px;
-
     animation: appear 1s ease-out;
 
 }
-
+#textarea {
+  margin: auto;
+  width: 400px;
+  height: 200px;
+  overflow-y: scroll;
+  border: 1px solid black;
+  text-align: left;
+}
+#textarea *{
+  padding: 0;
+  margin: 0;
+}
 @keyframes appear {
     0% {
         opacity: 0;
@@ -43,6 +53,17 @@ body {
     border-radius: 5px;
 
 }
+#game {
+  transition: 1s ease
+}
+.disabled {
+  cursor: not-allowed;
+}
+p.system {
+  color: gray;
+  font-style: italic;
+}
+
 .carte:hover {
     transform: translateY(-5px) scale(1.1);
     box-shadow: 0 8px 6px rgba(0,0,0,0.16), 0 8px 6px rgba(0,0,0,0.23);

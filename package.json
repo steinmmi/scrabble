@@ -11,5 +11,9 @@
   "scripts": {
     "start": "nodemon app.js"
   },
+  "nodemonConfig": {
+    "ignore": ["public/*"],
+    "delay": "2500"
+  },
   "author": "Mathieu S, Léo M"
 }

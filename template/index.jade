@@ -8,7 +8,11 @@ html
         script(src='raphael.min.js')
     body
         h1 Scrabble en ligne
-        div#game
+        div#game.desactivated
         div#letters
         input#endturn(type="button", value="Fin du tour")
         input#cancel(type="button", value="Annuler")
+        div#chat
+          div#textarea
+          input#chatInput(type="text")
+          input#chatButton(type="button", value="Envoyer")
